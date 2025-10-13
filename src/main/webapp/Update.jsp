@@ -13,7 +13,7 @@
 <script>
 	function modify(trno)
 	{
-		alert("Deleting Roll Number : " + trno);
+		alert("Updating Roll Number : " + trno);
 		// take that rno
 		// Prepare Request : http://localhost:8080/Project-Crud-Operation-Using-JDBC/UpdateStudent
 		// method : POST

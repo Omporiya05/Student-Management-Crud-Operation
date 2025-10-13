@@ -35,9 +35,9 @@ public class DisplayStudent extends HttpServlet {
 
 		List<Student> list = new ArrayList<>();
 
-		final String DB_URL = "jdbc:mysql://localhost:3306/omdb";
-		final String DB_USER = "root";
-		final String DB_PWD = "root@123";
+		final String DB_URL    = "jdbc:postgresql://ep-icy-sky-a1672e3v-pooler.ap-southeast-1.aws.neon.tech/neondb";
+		final String DB_USER   = "neondb_owner";
+		final String DB_PWD    = "npg_q6JKZXoYHIn3";
 		
 		String query = "";
 		
@@ -60,7 +60,7 @@ public class DisplayStudent extends HttpServlet {
 		
 	
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			con = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -80,7 +80,7 @@ public class DisplayStudent extends HttpServlet {
 			list = null;
 		} finally {
 			try {
-				rs.close();
+				//rs.close();
 				con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

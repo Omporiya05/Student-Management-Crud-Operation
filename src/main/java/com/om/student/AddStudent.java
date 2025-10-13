@@ -36,9 +36,15 @@ public class AddStudent extends HttpServlet {
 		
 		String message = null;
 		
-		final String DB_URL    = "jdbc:mysql://localhost:3306/omdb";
+		/*final String DB_URL    = "jdbc:mysql://localhost:3306/omdb";
 		final String DB_USER   = "root";
-		final String DB_PWD    = "root@123";
+		final String DB_PWD    = "root@123";*/
+		
+		
+		final String DB_URL    = "jdbc:postgresql://ep-icy-sky-a1672e3v-pooler.ap-southeast-1.aws.neon.tech/neondb";
+		final String DB_USER   = "neondb_owner";
+		final String DB_PWD    = "npg_q6JKZXoYHIn3";
+		
 		
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		String name = request.getParameter("name");
@@ -49,7 +55,7 @@ public class AddStudent extends HttpServlet {
 		
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			con = DriverManager.getConnection(DB_URL,DB_USER,DB_PWD);
 			
 			con.setAutoCommit(false);
