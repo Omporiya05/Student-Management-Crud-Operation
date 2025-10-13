@@ -30,7 +30,7 @@
 		var tper = td[2].querySelector("input").value;
 		
 		
-		fetch('http://localhost:8080/Project-Crud-Operation-Using-JDBC/UpdateStudent',
+		fetch('./UpdateStudent',
 			{
 			  method :'POST',
 			  body   : new URLSearchParams({'trno': trno,'tname':tname,'tper':tper})

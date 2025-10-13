@@ -23,7 +23,7 @@
 		// data = " Success "
 		
 		
-		fetch('http://localhost:8080/Project-Crud-Operation-Using-JDBC/DeleteStudent',
+		fetch('./DeleteStudent',
 			{
 			  method :'POST',
 			  body   : new URLSearchParams({'rno': trno})
