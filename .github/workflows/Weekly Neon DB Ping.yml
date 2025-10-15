@@ -1,6 +1,6 @@
 name: Weekly Neon DB Ping
 
-# run weekly — here Sunday at 00:00 UTC; adjust as needed
+# Run weekly — Sunday at 00:00 UTC
 on:
   schedule:
     - cron: "0 0 * * 0"
@@ -24,7 +24,9 @@ jobs:
             echo "NEON_CONNECTION_STRING is not set. Exiting."
             exit 1
           fi
+
           echo "Testing connection to Neon..."
+
           # Run a simple query. psql accepts a full URL.
           # If your URI needs SSL, ensure it contains `?sslmode=require` or add PGSSLMODE.
           psql "$NEON_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
