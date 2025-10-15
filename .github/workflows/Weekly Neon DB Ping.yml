@@ -10,13 +10,16 @@ jobs:
   ping_neon:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Show job info
       - name: Show job info
         run: echo "Weekly Neon ping - $(date) - run #${{ github.run_number }}"
 
+      # Step 2: Install PostgreSQL client
       - name: Install psql client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Ping Neon Database
+      # Step 3: Run a simple query on Neon
+      - name: Ping Neon Database (SELECT NOW)
         env:
           NEON_CONNECTION_STRING: ${{ secrets.NEON_CONNECTION_STRING }}
         run: |
@@ -27,8 +30,8 @@ jobs:
 
           echo "Testing connection to Neon..."
 
-          # Ensure SSL is enabled
+          # Ensure SSL is enabled for Neon
           CONNECTION_URL="${NEON_CONNECTION_STRING}?sslmode=require"
 
-          # Run a simple query
+          # Run the query
           psql "$CONNECTION_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
