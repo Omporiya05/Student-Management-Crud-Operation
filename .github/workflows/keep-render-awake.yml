@@ -1,0 +1,28 @@
+name: Keep Render App Awake
+
+# run every 10 minutes
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping_render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show job info
+        run: echo "Keep Render alive job - $(date) - run #${{ github.run_number }}"
+
+      - name: Ping Render app
+        env:
+          RENDER_URL: ${{ secrets.RENDER_URL }}
+        run: |
+          if [ -z "$RENDER_URL" ]; then
+            echo "RENDER_URL is not set. Exiting."
+            exit 1
+          fi
+          echo "Pinging $RENDER_URL"
+          # perform a simple GET, hide output but show HTTP code
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$RENDER_URL")
+          echo "HTTP status: $STATUS"
+          # non-2xx is still OK for keep-alive; fail only if curl fails (exit code != 0)
