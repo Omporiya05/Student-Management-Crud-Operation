@@ -1,0 +1,30 @@
+name: Weekly Neon DB Ping
+
+# run weekly — here Sunday at 00:00 UTC; adjust as needed
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch: {}
+
+jobs:
+  ping_neon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show job info
+        run: echo "Weekly Neon ping - $(date) - run #${{ github.run_number }}"
+
+      - name: Install psql client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Ping Neon (SELECT NOW)
+        env:
+          NEON_URL: ${{ secrets.NEON_CONNECTION_STRING }}
+        run: |
+          if [ -z "$NEON_URL" ]; then
+            echo "NEON_CONNECTION_STRING is not set. Exiting."
+            exit 1
+          fi
+          echo "Testing connection to Neon..."
+          # Run a simple query. psql accepts a full URL.
+          # If your URI needs SSL, ensure it contains `?sslmode=require` or add PGSSLMODE.
+          psql "$NEON_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
