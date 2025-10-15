@@ -16,17 +16,19 @@ jobs:
       - name: Install psql client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Ping Neon (SELECT NOW)
+      - name: Ping Neon Database
         env:
-          NEON_URL: ${{ secrets.NEON_CONNECTION_STRING }}
+          NEON_CONNECTION_STRING: ${{ secrets.NEON_CONNECTION_STRING }}
         run: |
-          if [ -z "$NEON_URL" ]; then
+          if [ -z "$NEON_CONNECTION_STRING" ]; then
             echo "NEON_CONNECTION_STRING is not set. Exiting."
             exit 1
           fi
 
           echo "Testing connection to Neon..."
 
-          # Run a simple query. psql accepts a full URL.
-          # If your URI needs SSL, ensure it contains `?sslmode=require` or add PGSSLMODE.
-          psql "$NEON_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
+          # Ensure SSL is enabled
+          CONNECTION_URL="${NEON_CONNECTION_STRING}?sslmode=require"
+
+          # Run a simple query
+          psql "$CONNECTION_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
