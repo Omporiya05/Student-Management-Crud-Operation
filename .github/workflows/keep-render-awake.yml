@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show job info
-        run: echo "Keep Render alive job - $(date) - run #${{ github.run_number }}"
+        run: echo "Keep Render alive job - $(date) - run"
 
       - name: Ping Render app
         env:
