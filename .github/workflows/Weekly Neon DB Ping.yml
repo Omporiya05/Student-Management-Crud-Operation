@@ -31,7 +31,7 @@ jobs:
           echo "Testing connection to Neon..."
 
           # Ensure SSL is enabled for Neon
-          CONNECTION_URL="${NEON_CONNECTION_STRING}?sslmode=require"
+          CONNECTION_URL="${NEON_CONNECTION_STRING}"
 
           # Run the query
           psql "$CONNECTION_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
