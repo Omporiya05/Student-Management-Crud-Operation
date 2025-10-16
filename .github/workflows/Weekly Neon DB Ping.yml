@@ -18,8 +18,8 @@ jobs:
       - name: Install psql client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      # Step 3: Run a simple query on Neon
-      - name: Ping Neon Database (SELECT NOW)
+      # Step 3: Run a query on Neon
+      - name: Query Neon Database (SELECT * FROM student LIMIT 1)
         env:
           NEON_CONNECTION_STRING: ${{ secrets.NEON_CONNECTION_STRING }}
         run: |
@@ -30,8 +30,8 @@ jobs:
 
           echo "Testing connection to Neon..."
 
-          # Ensure SSL is enabled for Neon
-          CONNECTION_URL="${NEON_CONNECTION_STRING}"
+          # Trim possible hidden characters
+          NEON_CONNECTION_STRING=$(echo "$NEON_CONNECTION_STRING" | tr -d '\r' | tr -d '\n' | tr -d ' ')
 
           # Run the query
-          psql "$CONNECTION_URL" -c "SELECT NOW();" --set ON_ERROR_STOP=on
+          psql "$NEON_CONNECTION_STRING" -c "SELECT * FROM student LIMIT 1;" --set ON_ERROR_STOP=on
