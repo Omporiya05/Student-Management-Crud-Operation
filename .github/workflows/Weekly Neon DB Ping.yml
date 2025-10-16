@@ -12,7 +12,7 @@ jobs:
     steps:
       # Step 1: Show job info
       - name: Show job info
-        run: echo "Weekly Neon ping - $(date) - run #${{ github.run_number }}"
+        run: echo "Weekly Neon ping - $(date) - run ${{ github.run_number }}"
 
       # Step 2: Install PostgreSQL client
       - name: Install psql client
