@@ -1,9 +1,9 @@
 name: Keep Render App Awake
 
-# run every 10 minutes
+# Run every 20 minutes
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/20 * * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -21,8 +21,9 @@ jobs:
             echo "RENDER_URL is not set. Exiting."
             exit 1
           fi
+
           echo "Pinging $RENDER_URL"
           # perform a simple GET, hide output but show HTTP code
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$RENDER_URL")
           echo "HTTP status: $STATUS"
-          # non-2xx is still OK for keep-alive; fail only if curl fails (exit code != 0)
+          # non-2xx is fine for keep-alive; fail only if curl fails
